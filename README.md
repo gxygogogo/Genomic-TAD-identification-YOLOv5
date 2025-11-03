@@ -37,8 +37,55 @@ python 1.demo_HSIcutImageV2.py
 ![train](https://github.com/gxygogogo/Genomic-TAD-identification-YOLOv5/blob/main/img/train.png)
 
 ### 训练batch
+```{shell}
+python 2.train_demo.py
+```
 ![batch](https://github.com/gxygogogo/Genomic-TAD-identification-YOLOv5/blob/main/img/batch.png)
 
 ### 训练结果
-![loss](https://github.com/gxygogogo/Genomic-TAD-identification-YOLOv5/blob/main/img/batch.png)
+![loss](https://github.com/gxygogogo/Genomic-TAD-identification-YOLOv5/blob/main/scr/runs/train/LoadingDomain.V6/results.png)
+
+## Step5. 验证
+### 流程
+```{shell}
+python 3.val_demo.py
+```
+1. 加载模型与数据集
+* 读入 --weights（如 .../runs/train/LoadingDomain.V6/weights/best.pt）。
+* 读入 --data（你的 LoadingDomain.yaml，里面给出 val 图片列表/目录、nc、names）。
+2. 构建验证 dataloader
+* 使用 create_dataloader(..., rect=True, pad=0.5) 保持长宽比评估。
+* 默认三通道输入（BGR/RGB），尺寸由 --imgsz 控制（480）。
+3. 前向 & NMS
+* model(img) 得到预测，再做 non_max_suppression（阈值由 --conf-thres、--iou-thres）。
+4. 与GT匹配 & 统计
+* 计算每张图的正确匹配（IoU 阈值序列 0.50–0.95），累计得到 P/R、mAP@0.5、mAP@0.5:0.95。
+* 生成混淆矩阵、可选保存 txt/json 预测结果和标注-预测对比图。
+
+### 参数
+* --data：数据集 YAML（你的 LoadingDomain.yaml）。
+* --weights：待评估权重（通常是训练产出的 best.pt 或 last.pt）。
+* --imgsz 480：验证分辨率；要与训练时设置基本一致。
+* --conf-thres 0.01：评分阶段通常设很低，交由 NMS + AP 曲线综合评估。
+* --iou-thres 0.5：NMS 的 IoU 阈值（不是 mAP 的 IoU），默认 0.5 合理。
+* --batch-size 16：按显存调。
+* --half：FP16 推理（仅 CUDA）。
+* --single-cls：如果你的数据集就是单类别检测（例如只检测 “LoadingDomain”），可以打开；否则在 YAML 里 nc/names 要与真实类别数一致。
+* --save-txt / --save-json / --save-conf：是否把预测保存成 txt/COCO-JSON，及是否附带置信度。
+* --augment：测试时多尺度/翻转增强（通常关闭，保持可比性）。
+
+### 验证batch
+![val_batch](https://github.com/gxygogogo/Genomic-TAD-identification-YOLOv5/blob/main/img/val_batch.png)
+
+### 验证召回率
+![recall](https://github.com/gxygogogo/Genomic-TAD-identification-YOLOv5/blob/main/scr/runs/val/PR_curve.png)
+
+## Step6. 测试代码
+这一部分代码分为在CPU上运行的版本和在GPU上运行的版本。
+### 运行
+```{shell}
+python 4.Demo_testing_hic_CPU.py
+python 4.Demo_testing_hic_GPU.py
+```
+## Step7. 预测TAD
 
