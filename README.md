@@ -78,7 +78,7 @@ python 3.val_demo.py
 ![val_batch](https://github.com/gxygogogo/Genomic-TAD-identification-YOLOv5/blob/main/img/val_batch.png)
 
 ### 验证召回率
-![recall](https://github.com/gxygogogo/Genomic-TAD-identification-YOLOv5/blob/main/scr/runs/val/PR_curve.png)
+![recall](https://github.com/gxygogogo/Genomic-TAD-identification-YOLOv5/blob/main/scr/runs/val/exp/PR_curve.png)
 
 ## Step6. 测试代码
 这一部分代码分为在CPU上运行的版本和在GPU上运行的版本。
