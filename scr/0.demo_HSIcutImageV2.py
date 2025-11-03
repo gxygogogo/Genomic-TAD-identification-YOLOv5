@@ -77,11 +77,11 @@ cmap_germany = LinearSegmentedColormap.from_list('germany',colors,N=256)
 cmap = ListedColormap(['white','black'])
 
 winsize = "5kb"
-wdir = "/public1/xinyu/CohesinProject/DeepLearning_Cohesin/YOLOv5_multibackbone/cutHICs_jpg/"
+wdir = "/public1/xinyu/CohesinProject/DeepLearning_Cohesin/YOLOv5_multibackbone/recutHICs_LoadingD/"
 
 
 # gene_name= "WT"
-gene_name= "WT_CTCF"
+gene_name= "WT_SMC1A"
 # KO_signal_file = "SA2KO_DBSCANv3_pvalue.bedpe"
 # KO2_signal_all = pd.read_csv(wdir + KO_signal_file, sep='\t', header=None)
 # WT_signal_file = "WT_DBSCANv3_pvalue.bedpe"
@@ -89,9 +89,9 @@ WT_signal_file = gene_name + ".gaussian_sigma1truncate3.laplacian.bedpe"
 WT_signal_all = pd.read_csv(wdir + WT_signal_file, sep='\t', header=None)
 
 
-processed_path = "/public1/xinyu/CohesinProject/DeepLearning_Cohesin/YOLOv5_multibackbone/cutHICs_jpg"
+processed_path = "/public1/xinyu/CohesinProject/DeepLearning_Cohesin/YOLOv5_multibackbone/recutHICs_LoadingD"
 
-target_folder = '/public1/xinyu/CohesinProject/DeepLearning_Cohesin/YOLOv5_multibackbone/cutHICs_jpg'  # 替换为你的目标文件夹路径
+target_folder = '/public1/xinyu/CohesinProject/DeepLearning_Cohesin/YOLOv5_multibackbone/recutHICs_LoadingD'  # 替换为你的目标文件夹路径
 
 chrnames = WT_signal_all[0].unique()
 WT_df00_all = pd.DataFrame()
