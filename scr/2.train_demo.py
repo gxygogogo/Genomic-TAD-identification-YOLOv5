@@ -478,10 +478,10 @@ class ArgumentParser:
         
     def _add_arguments(self):
         # Define arguments
-        self.parser.add_argument('--weights', type=str, default=Path('/public1/xinyu/CohesinProject/DeepLearning_Cohesin/Loading_domain_yolo/yolov5x.pt'), help='initial weights path')
-        self.parser.add_argument('--cfg', type=str, default='/public1/xinyu/CohesinProject/DeepLearning_Cohesin/Loading_domain_yolo/models/accModels/yolov5xP2.yaml', help='model.yaml path')
-        self.parser.add_argument('--data', type=str, default=Path('/public1/xinyu/CohesinProject/DeepLearning_Cohesin/Loading_domain_yolo/data/LoadingDomain.yaml'), help='dataset.yaml path')
-        self.parser.add_argument('--hyp', type=str, default=Path('/public1/xinyu/CohesinProject/DeepLearning_Cohesin/Loading_domain_yolo/data/hyps/hyp.scratch.yaml'), help='hyperparameters path')
+        self.parser.add_argument('--weights', type=str, default=Path('scr/yolov5x.pt'), help='initial weights path')
+        self.parser.add_argument('--cfg', type=str, default='scr/models/accModels/yolov5xP2.yaml', help='model.yaml path')
+        self.parser.add_argument('--data', type=str, default=Path('scr/data/LoadingDomain.yaml'), help='dataset.yaml path')
+        self.parser.add_argument('--hyp', type=str, default=Path('scr/data/hyps/hyp.scratch.yaml'), help='hyperparameters path')
         self.parser.add_argument('--epochs', type=int, default=300)
         # batch size: 16
         self.parser.add_argument('--batch-size', type=int, default=16, help='total batch size for all GPUs')
@@ -503,7 +503,7 @@ class ArgumentParser:
         self.parser.add_argument('--adam', action='store_true', help='use torch.optim.Adam() optimizer')
         self.parser.add_argument('--sync-bn', action='store_true', help='use SyncBatchNorm, only available in DDP mode')
         self.parser.add_argument('--workers', type=int, default=8, help='maximum number of dataloader workers')
-        self.parser.add_argument('--project', default=Path('/public1/xinyu/CohesinProject/DeepLearning_Cohesin/Loading_domain_yolo/runs/train'), help='save to project/name')
+        self.parser.add_argument('--project', default=Path('scr/runs/train'), help='save to project/name')
         self.parser.add_argument('--name', default='LoadingDomain.V6', help='save to project/name')
         self.parser.add_argument('--exist-ok', action='store_true', help='existing project/name ok, do not increment')
         self.parser.add_argument('--quad', action='store_true', help='quad dataloader')
@@ -551,7 +551,7 @@ else:
         check_file(opt.data), check_yaml(opt.cfg), check_yaml(opt.hyp), str(opt.weights), str(opt.project)  # checks
     assert len(opt.cfg) or len(opt.weights), 'either --cfg or --weights must be specified'
     if opt.evolve:
-        opt.project = str('/public1/xinyu/CohesinProject/DeepLearning_Cohesin/Loading_domain_yolo/runs/evolve')
+        opt.project = str('scr/runs/evolve')
         opt.exist_ok, opt.resume = opt.resume, False  # pass resume to exist_ok and disable resume
     opt.save_dir = str(increment_path(Path(opt.project) / opt.name, exist_ok=opt.exist_ok))
 # DDP mode
@@ -649,4 +649,5 @@ else:
     print(f'Hyperparameter evolution finished\n'
           f"Results saved to {colorstr('bold', save_dir)}\n"
           f'Use best hyperparameters example: $ python train.py --hyp {evolve_yaml}')
+
 
