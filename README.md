@@ -88,4 +88,17 @@ python 4.Demo_testing_hic_CPU.py
 python 4.Demo_testing_hic_GPU.py
 ```
 ## Step7. 预测TAD
-
+### 关键流程
+1. 读入 bedpe → generate_mat 把 (row_bin, col_bin) 放到 WT_signal_mat（按 5kb / bin；>6 截断）。
+2. generate_intervals 产生每条染色体的子块区间（50-bin 步长，向右扩 overlap_len=5）。
+3. 每个子块：
+* 过滤空块（flags_sub），确定右边列终点 max_ii_col，得到方阵 WT_signal_mat_i；
+* 对称化（上三角→对称），按染色体全局 min/max 归一化到 0-255；
+* letterbox(..., 480) 得到网络输入，前向、NMS；
+* 把检测框坐标按 5kb bin → 基因组坐标；
+4. 邻近子块之间，按 IoU>0.3 合并（regionBoxDeRep）；
+5. 汇总保存到 Results/Loading_domain_WT_SMC1A.V6.bedpe。
+6. 产生的结果为每个TAD的位置，在Contact map中是一个个的方框的形式存在，可以结合JuiceBox进行效果的评估。
+```{shell}
+python 5.Demo_detect_hic_CPU_multiprocess.py
+```
