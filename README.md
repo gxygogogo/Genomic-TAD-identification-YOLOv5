@@ -12,6 +12,6 @@ Hi-C 矩阵（或其衍生矩阵，比如 .laplacian.bedpe → contact map）其
 ```{shell}
 python 0.run.gaussian.laplacian.sigma1truncate3.genomewide.py
 ```
-[!GL]()
+[!GL](https://github.com/gxygogogo/Genomic-TAD-identification-YOLOv5/blob/main/img/G_L.png)
 
 ## Step2. 图像分割
