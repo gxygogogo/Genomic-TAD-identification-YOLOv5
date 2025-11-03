@@ -77,7 +77,7 @@ cmap_germany = LinearSegmentedColormap.from_list('germany',colors,N=256)
 cmap = ListedColormap(['white','black'])
 
 winsize = "5kb"
-wdir = "/public1/xinyu/CohesinProject/DeepLearning_Cohesin/YOLOv5_multibackbone/recutHICs_LoadingD/"
+wdir = "scr/data/laplacian/"
 
 
 # gene_name= "WT"
@@ -89,9 +89,9 @@ WT_signal_file = gene_name + ".gaussian_sigma1truncate3.laplacian.bedpe"
 WT_signal_all = pd.read_csv(wdir + WT_signal_file, sep='\t', header=None)
 
 
-processed_path = "/public1/xinyu/CohesinProject/DeepLearning_Cohesin/YOLOv5_multibackbone/recutHICs_LoadingD"
+processed_path = "scr/recutHICs_LoadingD"
 
-target_folder = '/public1/xinyu/CohesinProject/DeepLearning_Cohesin/YOLOv5_multibackbone/recutHICs_LoadingD'  # 替换为你的目标文件夹路径
+target_folder = 'scr/recutHICs_LoadingD'  # 替换为你的目标文件夹路径
 
 chrnames = WT_signal_all[0].unique()
 WT_df00_all = pd.DataFrame()
