@@ -33,8 +33,8 @@ class ArgumentParser:
         self._add_arguments()
         
     def _add_arguments(self):
-        self.parser.add_argument('--data', type=str, default='/public1/xinyu/CohesinProject/DeepLearning_Cohesin/Loading_domain_yolo/data/LoadingDomain.yaml', help='dataset.yaml path')
-        self.parser.add_argument('--weights', nargs='+', type=str, default='/public1/xinyu/CohesinProject/DeepLearning_Cohesin/Loading_domain_yolo/runs/train/LoadingDomain.V6/weights/best.pt', help='model.pt path(s)')
+        self.parser.add_argument('--data', type=str, default='scr/data/LoadingDomain.yaml', help='dataset.yaml path')
+        self.parser.add_argument('--weights', nargs='+', type=str, default='scr/runs/train/LoadingDomain.V6/weights/best.pt', help='model.pt path(s)')
         self.parser.add_argument('--batch-size', type=int, default=16, help='batch size')
         self.parser.add_argument('--imgsz', '--img', '--img-size', type=int, default=480, help='inference size (pixels)')
         self.parser.add_argument('--conf-thres', type=float, default=0.01, help='confidence threshold')
@@ -48,7 +48,7 @@ class ArgumentParser:
         self.parser.add_argument('--save-hybrid', action='store_true', help='save label+prediction hybrid results to *.txt')
         self.parser.add_argument('--save-conf', action='store_true', help='save confidences in --save-txt labels')
         self.parser.add_argument('--save-json', action='store_true', help='save a COCO-JSON results file')
-        self.parser.add_argument('--project', default= '/public1/xinyu/CohesinProject/DeepLearning_Cohesin/Loading_domain_yolo/runs/val', help='save to project/name')
+        self.parser.add_argument('--project', default= 'scr/runs/val', help='save to project/name')
         self.parser.add_argument('--name', default='exp', help='save to project/name')
         self.parser.add_argument('--exist-ok', action='store_true', help='existing project/name ok, do not increment')
         self.parser.add_argument('--half', action='store_true', help='use FP16 half-precision inference')
@@ -124,7 +124,7 @@ def run(data,
         save_hybrid=False,  # save label+prediction hybrid results to *.txt
         save_conf=False,  # save confidences in --save-txt labels
         save_json=False,  # save a COCO-JSON results file
-        project='/public1/xinyu/CohesinProject/DeepLearning_Cohesin/Loading_domain_yolo/runs/val',  # save to project/name
+        project='scr/runs/val',  # save to project/name
         name='exp',  # save to project/name
         exist_ok=False,  # existing project/name ok, do not increment
         half=True,  # use FP16 half-precision inference
@@ -356,4 +356,5 @@ elif opt.task == 'study':  # run over a range of settings and save/plot
         np.savetxt(f, y, fmt='%10.4g')  # save
     os.system('zip -r study.zip study_*.txt')
     plot_val_study(x=x)  # plot
+
 
