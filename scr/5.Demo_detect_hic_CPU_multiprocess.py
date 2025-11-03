@@ -125,7 +125,7 @@ def regionBox_generate(WT_sig_mat,chrname,min_num,min_val,max_val):
     WT = upper_triangle + upper_triangle.T + np.diag(np.diag(WT))
     # WT = ((WT - min_val) / (max_val - min_val)).astype(np.float32)  # 转换为8位图像（0-255）
     WT = (255*(WT - min_val) / (max_val - min_val)).astype(np.uint8)  # 转换为8位图像（0-255）
-    w='/public1/xinyu/CohesinProject/DeepLearning_Cohesin/Loading_domain_yolo/runs/train/LoadingDomain.V6/weights/best.pt'
+    w='scr/runs/train/LoadingDomain.V6/weights/best.pt'
     weights = w
     model = torch.jit.load(w) if 'torchscript' in w else attempt_load(weights, map_location='cpu')
     stride = int(model.stride.max())
@@ -464,7 +464,7 @@ cmap = ListedColormap(['white','black'])
 # KO_signal_file = "SA2KO_DBSCANv3_pvalue.bedpe"
 # KO2_signal_all = pd.read_csv(wdir + KO_signal_file, sep='\t', header=None)
 # WT_signal_file = "WT_DBSCANv3_pvalue.bedpe"
-WT_signal_file = "/public1/xinyu/CohesinProject/DeepLearning_Cohesin/Loading_domain_yolo/hic/WT_SMC1A.gaussian_sigma1truncate3.laplacian.bedpe"
+WT_signal_file = "scr/data/hic/WT_SMC1A.gaussian_sigma1truncate3.laplacian.bedpe"
 WT_signal_all = pd.read_csv(WT_signal_file, sep='\t', header=None)
 
 chrnames = WT_signal_all[0].unique()
@@ -477,5 +477,6 @@ dense_df_regionBox_all = pd.DataFrame()
 # 假设WT_signal_all和chrnames已被定义
 dense_df_regionBox_all = run(WT_signal_all, chrnames)
 
-dense_df_regionBox_all.to_csv('/public1/xinyu/CohesinProject/DeepLearning_Cohesin/Loading_domain_yolo/Results/Loading_domain_WT_SMC1A.V6.bedpe', sep='\t', index=False, header=False)
+dense_df_regionBox_all.to_csv('scr/Results/Loading_domain_WT_SMC1A.V6.bedpe', sep='\t', index=False, header=False)
+
 
