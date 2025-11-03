@@ -1,6 +1,29 @@
 # Genomic TAD identification using YOLOv5
 ## YOLOv5的架构
 ![yolov5](https://github.com/gxygogogo/Genomic-TAD-identification-YOLOv5/blob/main/img/yolov5.png)
+### Input
+* 输入图像大小为640x640x3(RGB)
+* 经过一个Focus层，他会把原图的空间信息重排到通道维度
+  * 原图中每2x2的区域被拆成4个通道
+  * 因此特征图尺寸变为320x320x12
+  * 这能在保留细节的同时降低分辨率，提高下游计算效率
+### Backbone
+* 主干部分叫CSPDarknet53
+  * 结合了CSPNet(Cross Stage Partial Network)和DarkNet53
+  * 作用：提取多层特征(边缘、形状、模式等)
+  * CSP模块(CSP1, CSP3)能在分组卷积的同时减少梯度冗余，提高推理效率
+  * SPP(Spatial Pyramid Pooling)层扩大感受野，让模型能够看到更大上下文区域。
+### Neck
+* 融合多尺度特征，结构由FPN(Feature Pyramid Network)+PANet（Path Aggregation Network）组成
+  * FPN自顶向下融合高语义、低分辨率的特征
+  * PANet自底向上传递位置信息
+  * 两者结合可同时检测不同尺度的目标
+### Head
+* YOLOv5有3个检测头(通常对应3个尺度的输出特征层)
+* 每个检测头检测：
+  * 边界框(x,y,w,h)
+  * 置信度
+  * 类别标签
 
 ## 为什么使用YOLOv5识别TAD？
 Hi-C 矩阵（或其衍生矩阵，比如 .laplacian.bedpe → contact map）其实就是一张图像：
